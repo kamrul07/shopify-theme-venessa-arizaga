@@ -1,0 +1,12 @@
+<div id="tc-agree">
+  <div class="content">
+    <div>{{ pages.shipping-note.content }}</div>
+  </div>
+  <div class="cart-attribute__field">
+    <input type="hidden" name="attributes[Deliver my package without collecting a signature]" value="No">
+    <input type="checkbox" name="attributes[Deliver my package without collecting a signature]" value="Yes"{% if cart.attributes["Deliver my package without collecting a signature"] == "Yes" %} checked{% endif %}>
+    <label class="uppercase">Deliver my package without collecting a signature (US ORDERS ONLY)</label>
+     <p>{{ settings.cart_signature_text }}</p>
+  </div>
+  <label for="agree">{{ settings.cart_agree_text }}</label>			
+</div>

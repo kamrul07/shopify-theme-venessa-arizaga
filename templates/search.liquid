@@ -1,0 +1,123 @@
+<div id="main" class="collection">
+	<div class="page-top">
+		<div class="pure-g">
+			<div class="pure-u-1 pure-u-sm-1-3">
+				<article class="sorting"></article>
+			</div>
+			<div class="pure-u-1 pure-u-sm-1-3">
+              <article class="page-title">Your search results for:</article>
+			</div>
+			<div class="pure-u-1 pure-u-sm-1-3">
+				<article class="prevnext"></article>
+			</div>
+		</div>
+	</div>
+  
+  
+  <div class="search">
+			<div class="pure-g">
+				<div class="pure-u-1">
+					<article><nav class="horizontal-list">
+				<ul>
+					<li>
+                      <div class="form search-field">
+							<form class="search" action="/search">
+								<input type="hidden" name="type" value="product">
+								<input class="search_box" type="text" name="q" placeholder="Search" value="{{ search.terms }}">
+							</form>
+						</div>
+					</li>
+				</ul>
+                      </nav></article>
+				</div>
+			</div>
+		</div>
+  <!-- Begin content -->
+	<div class="content">
+      {% if search.performed %}
+    
+    {% paginate search.results by 8 %}  
+  
+    {% if search.results == empty %}  
+      <article style="text-align:center;"><p>Your search for "{{search.terms | escape}}" did not yield any results.</p></article>           
+    {% else %}  
+<div class="products">
+        <div class="pure-g">
+        {% for item in search.results %}   
+      
+      <!-- Begin lockdown app -->
+      {% if item.url contains '/products/' %}
+    {% assign allowed = true %}
+    {% for collection in item.collections %}
+        {% if collection.metafields.lockdown.locked %}
+            {% assign locked_type = collection.metafields.lockdown.locked_type %}
+            {% assign locked_type_value = collection.metafields.lockdown.locked_type_value %}
+            {% if locked_type == 'tag' %}
+                {% if customer.tags contains locked_type_value %}
+                    {% assign allowed = true %}
+                {% else %}
+                    {% assign allowed = false %}
+                {% endif %}
+            {% elsif locked_type == 'collection' %}
+                {% include 'allowed' %}
+            {% else %}
+                {% if customer %}
+                    {% assign allowed = true %}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% if allowed %}
+       <!-- End lockdown app -->
+          
+{% capture url %}{{ item.url }}{% endcapture %}
+
+
+			<div class="pure-u-1-2 pure-u-sm-1-2 pure-u-md-1-4 pure-u-lg-1-4 pure-u-xl-1-4"> <a href="{{ url }}">
+				<article class="product">
+                  {% if item.price_min < item.compare_at_price_min %}
+    {% if settings.show_sale_circle %}
+    <span class="circle sale">Sale</span>
+    {% endif %}
+  {% endif %}
+					<div class="image"><img src="{{ item.featured_image | product_img_url: 'grande' }}" alt="{{ item.title | escape  }}" class="pure-img" /></div>
+					<div class="information">
+						<div class="title">{{ item.title }}</div>
+						<div class="price"><span class="price {% if item.compare_at_price_max > item.price %}sale{% endif %}">
+      {% if item.available %}
+        {% if item.price_varies %}
+        <small><em>from</em></small>
+        {% endif %}
+        {{ item.price | money }}
+        {% if item.compare_at_price_max > item.price %}
+          <del>{{ item.compare_at_price | money }}</del>
+        {% endif %}
+      {% else %}
+        {{ item.price | money }} Sold Out
+      {% endif %}
+      </span></div>
+					</div>
+				</article>
+				</a>
+<span class="shopify-product-reviews-badge" data-id="{{ item.id }}"></span>
+</div>
+      
+      {% endif %}
+        
+        {% endfor %}
+             
+</div>
+  </div>
+    {% endif %}
+    
+    
+  {% include 'pagination' %}
+{% endpaginate %}   
+    
+  {% endif %}
+      </div>
+  <!-- End content -->
+  
+</div>

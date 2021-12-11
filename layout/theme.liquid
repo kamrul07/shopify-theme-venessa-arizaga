@@ -1,0 +1,220 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head> 
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+      $m = $.noConflict(true); 
+    </script>
+  {% include 'lockdown' %}
+  {% unless allowed %}
+  <meta name="robots" content="noindex, follow" />
+  {% endunless %}
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>{% if template == 'index' %}{% if page_title contains 'Welcome' %}{{ shop.name }} &ndash; Welcome{% else %}{{ page_title }}{% endif %}{% elsif template == '404' %}Page Not Found{% elsif page_title contains shop.name %}{{ page_title }}{% else %}{{ page_title }} &ndash; {{ shop.name }}{% endif %}</title>
+  <!-- meta -->
+  {% if page_description %}
+  <meta name="description" content="{{ page_description }}" />
+  {% endif %}
+  <meta name="keywords" lang="en" content="Venessa Arizaga, NECKLACES, BRACELETS, FRIENDSHIP, EARRINGS, BAGS, RINGS, HAIR, SUNGLASS, PINS, KEY LEASHES, CUFF LINKS" >
+  <meta name="copyright" content="&copy; {{ shop.name }}">
+  <meta name="author" content="{{ shop.name }}">
+  <meta name="author-corporate" content="{{ shop.name }}">
+  <meta name="email" content="info@venessaarizaga.com">
+  <link rel="canonical" href="{{ canonical_url }}" />
+  <!-- open graph -->
+  {% include 'fb-open-graph-tags' %}
+  <!-- apple meta tags -->
+  <meta content="{{ shop.name }}" name="apple-mobile-web-app-title">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style">
+  <!-- favicon  -->
+  <link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}" type="image/png" />
+  <!-- windows 8 pinned sites on start screen -->
+  <!-- image must be 144x144px and Microsoft recommends a transparent background -->
+  <meta name="msapplication-TileColor" content="#000000">
+  <meta name="msapplication-TileImage" content="images/windows/msapplication-tileimage.png">
+  <!-- windows 8 pin description -->
+  <meta name="application-name" content="{{ shop.name }}" />
+  <!-- iphone and ipad -->
+  <meta name="format-detection" content="telephone=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <!-- standard iphone -->
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="images/apple/icon-57.png">
+  <!-- retina iphone -->
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/apple/icon-114.png">
+  <!-- standard ipad -->
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/apple/icon-72.png">
+  <!-- retina ipad -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/apple/touch-icon-ipad-144.png" >
+  <meta name="facebook-domain-verification" content="1ybqpqxll4etylwr557p6mzish6uwv" />
+  <!-- pure-css -->
+  {{ 'pure-min.css' | asset_url | stylesheet_tag }}
+  <!--[if lte IE 8]>
+  {{ 'grids-responsive-old-ie-min.css' | asset_url | stylesheet_tag }}
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  {{ 'grids-responsive-min.css' | asset_url | stylesheet_tag }}
+  <!--<![endif]-->
+
+  <!-- typekit -->
+  <script src="https://use.typekit.net/sgu7cwy.js"></script>
+  <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+  <!-- typicons -->
+  {{ 'typicons.css' | asset_url | stylesheet_tag }}
+
+  <!-- font-awesome -->
+  {{ 'font-awesome.css' | asset_url | stylesheet_tag }}
+
+  <!-- styles-css -->
+  {{ 'styles.css' | asset_url | stylesheet_tag }}
+
+  <!-- jquery 2.1.0 -->
+  {{ 'jquery-2.1.0.min.js' | asset_url | script_tag }}
+  <!-- jquery 1.8.0 (needed for cloud zoom to work) -->
+  <!--{{ 'jquery.min.js' | asset_url | script_tag }}-->
+
+  <!-- stupidtable -->
+  {% if page.handle  == 'retailers' %}
+  {{ 'stupidtable.min.js' | asset_url | script_tag }}
+  {{ 'stupidtable.css' | asset_url | stylesheet_tag }}
+  {{ 'retailers-init.js' | asset_url | script_tag }}
+  {% endif %}
+
+  <!-- jquery cycle2 -->
+  {{ 'jquery-cycle2.min.js' | asset_url | script_tag }}
+
+  <!-- jquery fluidbox -->
+  {{ 'jquery.fluidbox.min.js' | asset_url | script_tag }}
+  {{ 'fluidbox.css' | asset_url | stylesheet_tag }}
+
+  <!-- scripts -->
+  {{ 'scripts.js' | asset_url | script_tag }}
+  
+  {{ 'option_selection.js' | shopify_asset_url | script_tag }}
+  {{ 'api.jquery.js' | shopify_asset_url | script_tag }}
+
+  {% if template contains 'customers' %}
+  {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+  {{ 'customer_area.js'  | shopify_asset_url | script_tag }}
+  {% endif %}
+
+  {% if template == "product" %}
+  {{ 'cloud-zoom.js' | asset_url | script_tag }}
+  {{ 'cloud-zoom.css' | asset_url | stylesheet_tag }}
+  {% endif %}
+
+    {% if template == "product.customizable" %}
+  {{ 'cloud-zoom.js' | asset_url | script_tag }}
+  {{ 'cloud-zoom.css' | asset_url | stylesheet_tag }}
+  {% endif %}
+
+    {% if template == "product.custombracelet" %}
+  {{ 'cloud-zoom.js' | asset_url | script_tag }}
+  {{ 'cloud-zoom.css' | asset_url | stylesheet_tag }}
+  {% endif %}
+
+      {% if template == "product.custombraceletset" %}
+  {{ 'cloud-zoom.js' | asset_url | script_tag }}
+  {{ 'cloud-zoom.css' | asset_url | stylesheet_tag }}
+  {% endif %}
+  
+  {% if template == "product.customthreadbracelet" %}
+  {{ 'cloud-zoom.js' | asset_url | script_tag }}
+  {{ 'cloud-zoom.css' | asset_url | stylesheet_tag }}
+  {% endif %}
+
+  {% if collection.handle %}
+  {{ 'collection-init.js' | asset_url | script_tag }}
+  {% endif %}
+
+  <!-- imagelightbox -->
+  {% if page.handle  == 'social' %}
+  {{ 'imagelightbox.min.js' | asset_url | script_tag }}
+  {{ 'imagesloaded.pkgd.min.js' | asset_url | script_tag }}
+  {% endif %}
+
+  <!-- html5.js -->
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+  {{ 'html5.js' | asset_url | script_tag }}
+  <![endif]-->
+  
+  {% if template contains 'product' %}
+  <script>
+  var selectCallback = function(variant, selector) {
+    if (variant && variant.available) {
+      jQuery('#add-to-cart').removeAttr('disabled').removeClass('disabled'); // remove unavailable class from add-to-cart button, and re-enable button
+      if(variant.price < variant.compare_at_price){
+        jQuery('#price-preview').html(
+          Shopify.formatMoney(
+            variant.price,
+            "{{ shop.money_format }}"
+          ) +
+          " <del>" +
+          Shopify.formatMoney(
+            variant.compare_at_price,
+            "{{ shop.money_format }}"
+          ) +
+          "</del>"
+        );
+        jQuery('#price-preview').html(
+          Shopify.formatMoney(
+            variant.price,
+            "{{ shop.money_format }}"
+          )
+        );
+      }
+    } else {
+      jQuery('#add-to-cart').addClass('disabled').attr('disabled', 'disabled'); // set add-to-cart button to unavailable class and disable button
+      var message = variant ? "Sold Out" : "Unavailable";
+      jQuery('#price-preview').text(message);
+    }
+    if (variant && variant.featured_image) {
+      var originalImage = $("img#myimage");
+      var newImage = variant.featured_image;
+      var element = originalImage[0];
+      console.log('originalImage: ' + element );
+      Shopify.Image.switchImage(newImage, element, function (newImageSizedSrc, newImage, element) {
+        $(element).parents('a').attr('href', newImageSizedSrc);
+        $(element).attr('src', newImageSizedSrc);
+      });
+    }
+    jQuery("#placeholder").CloudZoom();
+  };
+  jQuery(document).ready(function($){
+    new Shopify.OptionSelectors("product-select", { product: {{ product | json }}, onVariantSelected: selectCallback, enableHistoryState: true });
+    // Add label if only one product option and it isn't 'Title'.
+    {% if product.options.size == 1 and product.options.first != 'Title' %}
+      $('.selector-wrapper:eq(0)').prepend('<label>{{ product.options.first }}</label>');
+    {% endif %}
+  });
+  </script>
+  {% endif %}
+  {{ content_for_header }}
+
+{% assign pageurl = content_for_header| split:'"pageurl":"' | last | split:'"' | first %} 
+{% assign Shopdomain = pageurl | split : "\/" | first %} 
+<script id='geoshippingbarscript' mlveda='{{Shopdomain}}' src='https://venessaarizaga.myshopify.com/apps/GeoShippingBar/GeoShipingBarProxy.js'></script>
+{{ 'mlveda-shippingbar.css' | asset_url | stylesheet_tag }} 
+</head>
+<body>
+{% include 'header' %}
+{{ content_for_layout }}
+{% include 'footer' %} 
+<script>
+jQuery(function(){jQuery("body").on("click",'[name="checkout"], [name="goto_pp"], [name="goto_gc"]',function(){var e=!0,r="Please fill this out and you will be able to check out.";return jQuery('[name^="attributes"], [name="note"]').filter('.required, [required]').each(function(){jQuery(this).removeClass("error"),e&&""==jQuery(this).val()&&(e=!1,r=jQuery(this).attr("data-error")||r,jQuery(this).addClass("error"))}),e?void jQuery(this).submit():(alert(r),!1)})}),jQuery(window).unload(function(){var e=jQuery('form[action="/cart"]');if(e.size()){var r={type:"POST",url:"/cart/update.js",data:e.serialize(),dataType:"json",async:!1};jQuery.ajax(r)}});
+</script>
+<script type="text/javascript">
+  var $mcGoal = {'settings':{'uuid':'88fcdd528c28ee26244a29f01','dc':'us1'}};
+  (function() {
+    var sp = document.createElement('script'); sp.type = 'text/javascript'; sp.async = true; sp.defer = true;
+    sp.src = ('https:' == document.location.protocol ? 'https://s3.amazonaws.com/downloads.mailchimp.com' : 'http://downloads.mailchimp.com') + '/js/goal.min.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(sp, s);
+  })(); 
+</script>
+<!-- **BEGIN** Hextom CTB Integration // Main Include - DO NOT MODIFY -->
+{% render 'hextom_ctb_main', product: product, customer: customer %}
+<!-- **END** Hextom CTB Integration // Main Include - DO NOT MODIFY -->
+</body>
+</html>

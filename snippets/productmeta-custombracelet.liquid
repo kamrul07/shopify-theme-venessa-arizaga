@@ -1,0 +1,86 @@
+<article class="information">
+  <div class="title">{{ product.title }}</div>
+
+  <div class="purchase" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+    <meta itemprop="priceCurrency" content="{{ shop.currency }}" />
+    {% if product.available %}
+    <link itemprop="availability" href="http://schema.org/InStock" />
+    {% else %}
+    <link itemprop="availability" href="http://schema.org/OutOfStock" />
+    {% endif %}
+
+    {% form 'product', product, id: "add-item-form", class: "variants clearfix" %}
+
+    <!-- product price -->
+    <div class="price {% if product.price_min < product.compare_at_price_min %}sale{% endif %}" id="price-preview">
+      <span itemprop="price">{{ product.selected_or_first_available_variant.price | money }}</span>{% if product.selected_or_first_available_variant.price < product.selected_or_first_available_variant.compare_at_price %} <del>{{ product.selected_or_first_available_variant.compare_at_price | money }}</del>{% endif %}
+      <!--<span itemprop="price">{{ product.price_min | money }}</span>{% if product.price_min < product.compare_at_price_min %} <del>{{ product.compare_at_price_min | money }}</del>{% endif %}-->
+    </div>
+
+    {% assign hide_default_title = false %}
+    {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+    {% assign hide_default_title = true %}
+    {% endif %}
+
+    <!-- product form content -->
+    <div class="add-item">
+
+      <!-- Begin product options -->
+      <div class="product-options">
+
+        <div class="row">
+          <input min="1" type="text" id="quantity" name="quantity" value="1" />
+          <div class="select clearfix"{% if hide_default_title %} style="display:none"{% endif %}>
+            <select id="product-select" name="id">
+              {% for variant in product.variants %}
+              <!--<option value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>-->
+              <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }} </option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        
+        <div class="custom-text"> 
+          <label for ="customtext">Custom Text (10 characters max, 2 emojis max)</label><br>
+          <input type="text" id="customtext" name="properties[CUSTOM TEXT]" placeholder="TYPE IN TEXT" maxlength="12" onkeyup="this.value = this.value.toUpperCase();" required>
+        </div>
+        <br><br>
+        <div class="custom-text"> 
+          <label for ="endbeads">End Beads (2 letters or symbols that will be on the tassels)</label><br>
+          <input type="text" id="endbeads" name="properties[END BEADS]" placeholder="TYPE IN TEXT" maxlength="2" onkeyup="this.value = this.value.toUpperCase();" required>
+        </div>
+
+        <div class="purchase-section{% if product.variants.size > 1 %} multiple{% endif %}">
+          <div class="purchase">
+            {% unless product.available %}
+            <p>Sold Out</p>
+            {% else %}
+            <input type="submit" id="add-to-cart" class="btn" name="add" value="Add to cart" />
+            {% endunless %}
+          </div>
+        </div>
+
+      </div>
+      <!-- End product options -->
+
+    </div>
+
+    <!-- payment_terms -->
+    <div class="shopify-payment-terms">
+      {{ form | payment_terms }}
+    </div>
+
+    {% endform %}
+
+  </div>
+
+  <div class="extra">
+    <div class="description">
+      {{ product.description }}
+    </div>
+    <!-- Begin social buttons -->
+    {% include 'like' %}
+    <!-- End social buttons -->
+
+  </div>
+</article>

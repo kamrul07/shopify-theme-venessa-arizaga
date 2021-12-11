@@ -1,0 +1,33 @@
+{% capture collection_handle %}{{ product-loop | handleize }}{% endcapture %}
+{% capture url %}{% if collection_handle != "" %}/collections/{{ product-loop }}{{ product.url }}{% else %}{{ product.url }}{% endif %}
+{% endcapture %}
+
+
+			<div class="pure-u-1-2 pure-u-sm-1-2 pure-u-md-1-4 pure-u-lg-1-4 pure-u-xl-1-4"> <a href="{{ url }}">
+				<article class="product">
+                  {% if product.price_min < product.compare_at_price_min %}
+    {% if settings.show_sale_circle %}
+    <span class="circle sale">Sale</span>
+    {% endif %}
+  {% endif %}
+					<div class="image"><img src="{{ product.featured_image | product_img_url: 'grande' }}" alt="{{ product.title | escape  }}" class="pure-img" /></div>
+					<div class="information">
+						<div class="title">{{ product.title }}</div>
+						<div class="price"><span class="price {% if product.compare_at_price_max > product.price %}sale{% endif %}">
+      {% if product.available %}
+        {% if product.price_varies %}
+        <small><em>from</em></small>
+        {% endif %}
+        {{ product.price | money }}
+        {% if product.compare_at_price_max > product.price %}
+          <del>{{ product.compare_at_price | money }}</del>
+        {% endif %}
+      {% else %}
+        {{ product.price | money }} Sold Out
+      {% endif %}
+      </span></div>
+					</div>
+				</article>
+				</a>
+<span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+</div>

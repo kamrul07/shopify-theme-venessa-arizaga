@@ -1,0 +1,55 @@
+	table#retailers {
+      width: 100% !important;
+		border-collapse: collapse;
+		text-align:left;
+	}
+	table#retailers thead th, table#retailers tbody td {
+		padding: 10px;
+	}
+	table#retailers thead th {
+		background-color: #f0f0f0;
+	}
+	table#retailers thead th[data-sort]{
+		cursor:pointer;
+	}
+	table#retailers thead th[data-sort]:hover{
+		color:#a6d9e4;
+	}
+	table#retailers tbody td {
+		font-size:10px;
+	}
+	table#retailers thead tr th:nth-child(2), table#retailers tbody tr td:nth-child(2) {
+		display:none;
+	}
+	table#retailers thead tr th:nth-child(3), table#retailers tbody tr td:nth-child(3) {
+		display:none;
+	}
+	table#retailers thead tr th:nth-child(4), table#retailers tbody tr td:nth-child(4) {
+		display:none;
+	}
+	table#retailers thead tr th:nth-child(5), table#retailers tbody tr td:nth-child(5) {
+		display:none;
+	}
+	@media only screen and (min-width : 480px) {
+		table#retailers tbody td {
+			font-size:inherit;
+		}
+		table#retailers thead tr th:nth-child(3), table#retailers tbody tr td:nth-child(3) {
+			display:table-cell;
+		}
+	}
+	@media only screen and (min-width : 960px) {
+		table#retailers thead tr th:nth-child(5), table#retailers tbody tr td:nth-child(5) {
+			display:table-cell;
+		}
+	}
+	@media only screen and (min-width : 1240px) {
+		table#retailers thead tr th:nth-child(4), table#retailers tbody tr td:nth-child(4) {
+			display:table-cell;
+		}
+	}
+	@media only screen and (min-width : 1440px) {
+		table#retailers thead tr th:nth-child(2), table#retailers tbody tr td:nth-child(2) {
+			display:table-cell;
+		}
+	}

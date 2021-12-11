@@ -1,0 +1,35 @@
+{% if paginate.pages > 1 %}
+<div class="pagination">
+	<div class="pure-g">
+		<div class="pure-u-1">
+			<nav class="horizontal-list center-align">
+				<ul>
+					{% if paginate.previous %}
+					<li><a href="{{ paginate.previous.url }}" class="prev">{{ 'previous.png' | asset_url | img_tag: 'Previous', 'pure-img' }}</a></li>
+					{% else %}
+					<li>{{ back_word }}</li>
+					{% endif %}					
+								
+					{% for part in paginate.parts %}
+					{% if part.is_link %}
+					<li>{{ part.title | link_to: part.url }}</li>
+					{% else %}
+					{% if part.title == '&hellip;' %}
+					<li>{{ part.title }}</li>
+					{% else %}
+					<li class="active">{{ part.title }}</li>
+					{% endif %}
+					{% endif %}
+					{% endfor %}
+									
+					{% if paginate.next %}
+					<li><a href="{{ paginate.next.url }}" class="next">{{ 'next.png' | asset_url | img_tag: 'Next', 'pure-img' }}</a></li>
+					{% else %}
+					<li><span>{{ next_word }}</span></li>
+					{% endif %}
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+{% endif %}

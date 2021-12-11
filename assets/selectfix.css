@@ -1,0 +1,15 @@
+select, .select {
+  background-color: #fff;
+  color: #000;
+  line-height: 9px;
+  height: 9px;
+  width: 160px;
+}
+select {
+  width: 160px;
+}
+.arrow {
+  background-color: #fff;
+  border-left: 1px solid #fff;
+  color:#000;
+}

@@ -1,0 +1,17 @@
+
+  #countrymsg > *{
+    background: inherit;
+    color: inherit;
+}  
+
+#countrymsg{
+    left: 0;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    top: 0;
+    width: 100%;
+    z-index: 9999999999;
+ }

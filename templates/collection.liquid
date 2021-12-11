@@ -1,0 +1,68 @@
+<div id="main" class="collection">
+  {% paginate collection.products by settings.pagination_limit %}
+	<div class="page-top borders">
+		<div class="pure-g">
+          <div class="pure-u-1 pure-u-sm-1-3">
+            <article class="sorting">
+              Sort by: <!--<a href="" data-sortby="manually">Featured</a> / --><a href="" data-sortby="title-ascending">A-Z</a> / <a href="" data-sortby="price-ascending">Price</a> / <!--<a href="" data-sortby="price-descending">Price descending</a> / --><a href="" data-sortby="created-descending">What's new</a>
+              </article>
+          </div>
+          <div class="pure-u-1 pure-u-sm-1-3">
+            <article class="page-title">
+              <!-- Begin breadcrumb -->
+              <div class="breadcrumb clearfix">
+                <a href="{{ collection.url }}" title="{{ collection.title | escape }}" itemprop="url"><span itemprop="title">{{ collection.title }}</span></a>
+         	</div>
+             
+              <!-- End breadcrumb -->
+            </article>
+          </div>
+          <div class="pure-u-1 pure-u-sm-1-3">
+            {% if paginate.pages > 1 %}
+            <article class="prevnext">
+              {% if paginate.previous %}
+              <a href="{{ paginate.previous.url }}" class="prev">Previous</a>{% else %} <span>{{ back_word }}</span>
+              {% endif %}
+              {% if paginate.previous and paginate.next %}
+              /
+              {% endif %}
+              {% if paginate.next %}
+              <a href="{{ paginate.next.url }}" class="next">Next</a> {% else %} <span>{{ next_word }}</span>
+              {% endif %}
+            </article>
+            {% endif %}
+          </div>
+      </div>
+  </div>
+  
+  {% if collection.description %}
+  <div class="inner">
+  <div class="description">
+    {{ collection.description }} 
+  </div>
+  </div>
+  {% endif %}
+	
+  <!-- Begin  products --> 
+  <div class="products">
+	
+	{% if collection.products.size == 0 %}	
+		<div class="pure-g">
+			<div class="pure-u-1-2 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4 pure-u-xl-1-4">
+				<article><p>No products found</p></article>
+				</div>
+		</div>
+	{% endif %}  
+	<div class="pure-g">
+      {% for product in collection.products limit: settings.pagination_limit %}
+      {% include 'product-loop' with collection.handle %}
+      {% endfor %}
+       </div>
+  </div>
+  <!-- End products --> 
+
+	{% include 'pagination' %}
+	
+	{% endpaginate %} 
+	
+</div>

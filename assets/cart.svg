@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px"
+	 height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
+<g id="Layer_1">
+	<g id="Layer_1_1_" display="none">
+		<rect x="2" y="4" display="inline" width="16" height="14"/>
+		<polygon display="inline" fill="#D8D8D8" points="18,4 18,5 18,7 2,7 2,5 2,4 		"/>
+		<path display="inline" fill="none" stroke="#000000" stroke-width="0.7819" stroke-miterlimit="10" d="M7,7c0,0,0.055-2,3.002-2
+			C12.948,5,13,7,13,7"/>
+		<path display="inline" fill="none" stroke="#000000" stroke-width="0.7815" stroke-miterlimit="10" d="M7,4c0,0,0.055-2,3.002-2
+			C12.948,2,13,4,13,4"/>
+	</g>
+	<g id="Layer_2">
+		<g>
+			<path d="M17,6v12H3V6H17 M18,5H2v14h16V5L18,5z"/>
+		</g>
+		<rect x="6" y="4" width="1" height="3"/>
+		<rect x="13" y="4" width="1" height="3"/>
+		<path fill="none" stroke="#000000" stroke-linejoin="bevel" stroke-miterlimit="10" d="M6.5,3.5"/>
+		<path fill="none" stroke="#000000" stroke-linejoin="bevel" stroke-miterlimit="10" d="M13.5,3.5"/>
+	</g>
+	<path fill="none" stroke="#000000" stroke-miterlimit="10" d="M6.5,4c0,0,0-2.5,3.5-2.5S13.5,4,13.5,4"/>
+</g>
+<g id="Layer_1_copy" display="none">
+	<g id="Layer_1_3_">
+		<rect x="2" y="4" display="inline" width="16" height="14"/>
+		<polygon display="inline" fill="#D8D8D8" points="18,4 18,5 18,7 2,7 2,5 2,4 		"/>
+		<path display="inline" fill="none" stroke="#000000" stroke-width="0.7819" stroke-miterlimit="10" d="M7,7c0,0,0.055-2,3.002-2
+			C12.948,5,13,7,13,7"/>
+		<path display="inline" fill="none" stroke="#000000" stroke-width="0.7815" stroke-miterlimit="10" d="M7,4c0,0,0.055-2,3.002-2
+			C12.948,2,13,4,13,4"/>
+	</g>
+	<g id="Layer_2_1_" display="inline">
+		<g>
+			<path d="M16,6v12H4V6H16 M17,5H3v14h14V5L17,5z"/>
+		</g>
+		<rect x="6" y="4" width="1" height="3"/>
+		<rect x="13" y="4" width="1" height="3"/>
+		<path fill="none" stroke="#000000" stroke-linejoin="bevel" stroke-miterlimit="10" d="M6.5,3.5"/>
+		<path fill="none" stroke="#000000" stroke-linejoin="bevel" stroke-miterlimit="10" d="M13.5,3.5"/>
+	</g>
+	<path display="inline" fill="none" stroke="#000000" stroke-miterlimit="10" d="M6.5,4c0,0,0-2.5,3.5-2.5S13.5,4,13.5,4"/>
+</g>
+</svg>

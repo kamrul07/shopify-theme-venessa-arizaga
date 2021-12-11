@@ -1,0 +1,90 @@
+<div id="main" class="single-product">
+
+  <div class="page-top">
+    <div class="pure-g">
+      <div class="pure-u-1">
+
+        <!-- Begin breadcrumb -->
+        {% include 'breadcrumb' %}
+        <!-- End breadcrumb -->
+
+      </div>
+    </div>
+  </div>
+
+  <div class="product inner">
+    <div class="pure-g">
+      
+      <div class="pure-u-1 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-2 pure-u-xl-1-2">
+        <!-- Begin gallery -->
+        {% include 'gallery' %}
+        <!-- End gallery -->
+      </div>
+      
+      <div class="pure-u-1 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-2 pure-u-xl-1-2">
+        <!-- Begin product-information -->
+        {% include 'productmeta-default' %}
+        <!-- End product-information -->
+      </div>
+      
+    </div>
+  </div>
+  
+  {% include 'related-products' %}
+  
+  {% include 'search' %}
+
+</div>
+
+{% comment %}
+Place this in your product.liquid template, either at the top or bottom.
+Updates the product option drop-downs when clicking on an image thumbnail, when using Variant Images in core.
+https://gist.github.com/carolineschnapp/c4ec6121c7741347e667
+{% endcomment %}
+{% if product.variants.size > 1 %}
+<script>
+  (function($) {
+    var variantImages = {},
+        thumbnails,
+        variant,
+        variantImage,
+        optionValue;
+    {% for variant in product.variants %}
+    variant = {{ variant | json }};
+    if ( typeof variant.featured_image !== 'undefined' && variant.featured_image !== null ) {
+      variantImage = variant.featured_image.src.split('?')[0].replace(/http(s)?:/,'');
+      variantImages[variantImage] = variantImages[variantImage] || {};
+      {% for option in product.options %}
+      {% assign option_value = variant.options[forloop.index0] %}
+      {% assign option_key = 'option-' | append: forloop.index0 %}
+      if (typeof variantImages[variantImage][{{ option_key | json }}] === 'undefined') {
+        variantImages[variantImage][{{ option_key | json }}] = {{ option_value | json }};
+      }
+      else {
+        var oldValue = variantImages[variantImage][{{ option_key | json }}];
+        if ( oldValue !== null && oldValue !== {{ option_value | json }} ) {
+            variantImages[variantImage][{{ option_key | json }}] = null;
+            }
+            }
+            {% endfor %}
+            }
+            {% endfor %}
+            $(window).load(function() {
+          thumbnails = $('img[src*="/products/"]').not(':first');
+          if (thumbnails.size()) {
+            thumbnails.bind('click', function() {
+              var image = $(this).attr('src').split('?')[0].replace(/(_thumb|_small|_compact|_medium|_large|_grande)/,'');
+              if (typeof variantImages[image] !== 'undefined') {
+                {% for option in product.options %}
+                optionValue = variantImages[image]['option-{{ forloop.index0 }}'];
+                                                   if (optionValue !== null && $('.single-option-selector:eq({{ forloop.index0 }}) option').filter(function() { return $(this).html() === optionValue }).length) {
+                                                   $('.single-option-selector:eq({{ forloop.index0 }})').val(optionValue).trigger('change');
+                                                   }
+                                                   {% endfor %}
+                                                   }
+                                                   });
+                                                   }
+                                                   });
+                                                   })(jQuery);
+</script>
+{% endif %}

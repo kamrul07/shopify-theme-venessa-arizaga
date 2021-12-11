@@ -1,0 +1,15 @@
+<!-- Begin breadcrumb -->
+<article class="page-title">
+  <div class="breadcrumb clearfix">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      {% if collection %}
+      <a href="{{ collection.url }}" title="{{ collection.title | escape }}" itemprop="url"><span itemprop="title">{{ collection.title }}</span></a>
+      {% else %}
+      <a href="/collections/all" title="All Products" itemprop="url"><span itemprop="title">Products</span></a>
+      {% endif %}
+    </span>
+    <span class="arrow-space">&#62;</span>
+    <strong>{{ product.title }}</strong>
+  </div>
+</article>
+<!-- End breadcrumb -->

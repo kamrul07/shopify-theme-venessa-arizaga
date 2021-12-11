@@ -1,0 +1,108 @@
+{% layout settings.customer_layout %}
+
+<div id="main" class="press">
+	<div class="page-top">
+		<div class="pure-g">
+			<div class="pure-u-1 pure-u-sm-1-3">
+				<article class="sorting"></article>
+			</div>
+			<div class="pure-u-1 pure-u-sm-1-3">
+				<article class="page-title">Login</article>
+			</div>
+			<div class="pure-u-1 pure-u-sm-1-3">
+				<article class="prevnext"></article>
+			</div>
+		</div>
+	</div>
+    
+  <!-- Begin content -->
+    <div class="content center-align">
+      <article>
+					<article class="">
+						<div class="body">
+                      		<div id="login" class="span7">
+      
+      <p class="reset-success success">Instructions for resetting your password has been sent.</p>
+
+      {% form 'customer_login' %}
+      {{ form.errors | default_errors }}
+
+      <div>
+        <label for="customer_email" class="label">Email Address</label><br>
+      <input type="email" value="" name="customer[email]" id="customer_email" class="text" />
+                              </div>
+<br>
+      {% if form.password_needed %}
+      <div><label for="customer_password" class="label">Password</label><br>
+      <input type="password" value="" name="customer[password]" id="customer_password" class="text" size="16" />
+                              </div>
+                              <br>
+                              <div><a href="#" onclick="showRecoverPasswordForm();return false;">Forgot your password?</a></div>
+      {% endif %}
+<br>
+      <div class="action_bottom">
+        <input type="hidden" name="return_to" value="/" />
+        <input class="btn rounded" type="submit" value="Sign In" /><br>or<br>
+        <span class="note">{{ 'Create account' | customer_register_link }}</span>
+      </div>
+      {% endform %}
+    </div>
+    
+    <div id="recover-password" style="display:none;" class="span7">
+      <h2>Reset Password</h2>
+      <p class="note">We will send you an email to reset your password.</p>
+
+      {% form 'recover_customer_password' %}
+      {{ form.errors | default_errors }}
+      
+      {% if form.posted_successfully? %}
+      {% assign reset_success = true %}
+      {% endif %}
+
+      <div><label for="email" class="label">Email Address</label><br>
+        <input type="email" value="" size="30" name="email" id="recover-email" class="text" /></div>
+<br>
+      <div>
+      <input class="btn rounded" type="submit" value="Submit" /><br>or<br>
+      <span class="note"><a href="#" onclick="hideRecoverPasswordForm();return false;">Cancel</a></span>
+      </div>
+      {% endform %}
+    </div>
+    
+    {% if shop.checkout.guest_login %}
+    <div id="guest" class="span5">
+      <h2>Guest Login</h2>
+      {% form 'guest_login' %}
+      <input class="btn rounded" type="submit" value="Continue as Guest" />
+      {% endform %}
+    </div>
+    {% endif %}
+                      </div>
+						
+					</article>
+				
+		</article>
+      </div>
+  <!-- End content -->
+  
+</div>
+
+<script type="text/javascript">
+  function showRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'block';
+    document.getElementById('login').style.display='none';
+  }
+
+  function hideRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'none';
+    document.getElementById('login').style.display = 'block';
+  }
+
+  if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+
+  $(document).ready(function () {
+    {% if reset_success %}
+    $(".reset-success").show();
+     {% endif %}
+});
+</script>

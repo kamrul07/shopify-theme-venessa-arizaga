@@ -1,0 +1,20 @@
+<li>
+  <div class="form search-field">
+    <form class="search" action="/search">
+      <input type="hidden" value="product" name="type">
+      <input class="search_box" type="text" value="" placeholder="" name="q">
+    </form>
+  </div>
+</li>
+{% if shop.customer_accounts_enabled %}
+  {% if customer  %}
+    <li>
+      <a href="/account">Hi {{ customer.first_name }}</a> / {{ "Logout" | customer_logout_link }}
+    </li>
+  {% else %}
+  	<li>{{ "Login" | customer_login_link }} / {{ 'Join' | customer_register_link }}</li>
+  {% endif %}
+{% endif %}
+{% unless cart.item_count == 0 %}
+<li><a href="/cart" class="cart" title="Shopping Cart"><img src="{{ 'cart.svg' | asset_url }}" style="margin-top:-5px; vertical-align:middle" /> Tote: {{ cart.item_count }}</a></li>
+{% endunless %}

@@ -1,0 +1,137 @@
+<div class="index-section--flush powr-popup" id="733397e2_1614718274"></div>
+
+<div id="main">
+  <div class="inner">
+    
+    {% if settings.slideshow_type == 'horizontal' %}
+    
+    <div class="gender">
+      <div class="pure-g padded">
+        <div class="pure-u-1">
+          <div id="horizontal-slideshow" class="cycle-slideshow" data-cycle-fx="fade" data-cycle-speed="1800" data-cycle-timeout="3600" data-cycle-slides="a">
+            {% for i in (1..2) %}
+            {% capture show_slide %}va_display_slide_horizontal_{{ i }}{% endcapture %}
+            {% capture image %}va_slideshow_horizontal_{{ i }}.jpg{% endcapture %}
+            {% capture link %}va_slide_horizontal_{{ i }}_link{% endcapture %}
+            {% capture text %}va_slide_horizontal_{{ i }}_text{% endcapture %}
+            {% if settings[show_slide] %}
+            <a href="{{ settings[link] }}">
+              <article>
+                <div class="image"><img src="{{ image | asset_url }}" alt="{{ settings[text] | escape }}"></div>
+                {% unless settings[text] == blank %}
+                <div class="overlay">
+                  <div class="excerpt">{{ settings[text] | escape }}</div>
+                </div>
+                {% endunless %}
+              </article>
+            </a>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    {% elsif settings.slideshow_type == 'portrait' %}
+    
+    <div class="gender">
+      <div class="pure-g padded">
+        <div class="pure-u-1 pure-u-sm-1-2 pure-u-md-1-2">
+          <div id="womens-slideshow" class="cycle-slideshow" data-cycle-fx="fade" data-cycle-speed="1800" data-cycle-timeout="3600" data-cycle-slides="a">
+            {% for i in (1..2) %}
+            {% capture show_slide %}va_display_slide_{{ i }}{% endcapture %}
+            {% capture image %}va_slideshow_{{ i }}.jpg{% endcapture %}
+            {% capture link %}va_slide_{{ i }}_link{% endcapture %}
+            {% capture text %}va_slide_{{ i }}_text{% endcapture %}
+            {% if settings[show_slide] %}
+            <a href="{{ settings[link] }}">
+              <article>
+                <div class="image"><img src="{{ image | asset_url }}" alt="{{ settings[text] | escape }}"></div>
+                {% unless settings[text] == blank %}
+                <div class="overlay">
+                  <div class="excerpt">{{ settings[text] | escape }}</div>
+                </div>
+                {% endunless %}
+              </article>
+            </a>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        <div class="pure-u-1 pure-u-sm-1-2 pure-u-md-1-2">
+          <div id="mens-slideshow" class="cycle-slideshow" data-cycle-fx="fade" data-cycle-speed="1800" data-cycle-timeout="3600" data-cycle-delay="2700" data-cycle-slides="a">
+            {% for i in (1..2) %}
+            {% capture show_slide %}am_display_slide_{{ i }}{% endcapture %}
+            {% capture image %}am_slideshow_{{ i }}.jpg{% endcapture %}
+            {% capture link %}am_slide_{{ i }}_link{% endcapture %}
+            {% capture text %}am_slide_{{ i }}_text{% endcapture %}
+            {% if settings[show_slide] %}
+            <a href="{{ settings[link] }}">
+              <article>
+                <div class="image"><img src="{{ image | asset_url }}" alt="{{ settings[text] | escape }}"></div>
+                <div class="overlay">
+                  <div class="excerpt">{{ settings[text] | escape }}</div>
+                </div>
+              </article>
+            </a>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    {% endif %}
+	
+	<div class="featured">
+		<div class="pure-g padded">
+          {% for i in (1..6) %}
+          {% capture show_image %}fp_image_{{ i }}_show{% endcapture %}
+          {% capture type %}fp_image_{{ i }}_type{% endcapture %}
+          {% capture image %}fp_image_{{ i }}.jpg{% endcapture %}
+          {% capture link %}fp_image_{{ i }}_link{% endcapture %}
+          {% capture text %}fp_image_{{ i }}_text{% endcapture %}
+          
+          {% if settings[show_image] %}
+          
+          {% if settings[type] == 'portrait' %}
+          
+          <div class="pure-u-1 pure-u-sm-1-3 pure-u-md-1-3 pure-u-lg-1-3">
+            {% unless settings[link] == blank %}<a href="{{ settings[link] }}">{% endunless %}
+            <article>
+              <div class="image {{ settings[type] }}" style="background-image: url({{ image | asset_url }})"></div>
+              {% unless settings[text] == blank %}
+              <div class="overlay">
+                <div class="excerpt">{{ settings[text] | escape }}</div>
+              </div>
+              {% endunless %}
+            </article>
+            {% unless settings[link] == blank %}</a>{% endunless %}
+          </div>
+          
+          {% elsif settings[type] == 'landscape' %}
+          
+          <div class="pure-u-1 pure-u-sm-2-3 pure-u-md-2-3 pure-u-lg-2-3">
+            {% unless settings[link] == blank %}<a href="{{ settings[link] }}">{% endunless %}
+            <article>
+              <div class="image {{ settings[type] }}" style="background-image: url({{ image | asset_url }})"></div>
+              {% unless settings[text] == blank %}
+              <div class="overlay">
+                <div class="excerpt">{{ settings[text] | escape }}</div>
+              </div>
+              {% endunless %}
+            </article>
+            {% unless settings[link] == blank %}</a>{% endunless %}
+          </div>
+          
+          {% endif %}
+          
+          {% endif %}
+          {% endfor %}
+      </div>
+    </div>
+    
+    {{ content_for_index }}
+  
+  </div>  
+</div>

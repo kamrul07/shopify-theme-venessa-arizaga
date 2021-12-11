@@ -1,0 +1,232 @@
+<!-- Begin img-zoom -->
+{% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+<div class="img-zoom">
+  <div class="img-zoom-container">
+    <img id="myimage" class="img-zoom-image" src="{{ featured_image | img_url: '1024x1024' }}">
+    <div id="myresult" class="img-zoom-result"></div>
+    <div id="myvideo"></div>
+  </div>
+  {% if product.media.size > 1 %}
+  <div class="thumbs">
+    {% for media in product.media %}
+    {% case media.media_type %}
+    {% when 'image' %}
+    <div class="image" data-media-id="{{ media.id }}">
+      <a href="{{ media | product_img_url: 'master' }}" class="captureclick">
+        <img src="{{ media | product_img_url: 'medium' }}" alt="{{ media.alt | escape }}" />
+      </a>
+    </div>
+    {% when 'video' %}
+    {% assign video_html = media | video_tag: controls: false, loop: true, autoplay: true, muted: true, image_size: "medium" %}
+    {% assign video_poster = media | video_tag: image_size: "medium" | split: 'poster="' %}
+    {% assign video_poster_url  = video_poster[1]  | split: '"' %}
+    <div class="image" data-media-id="{{ media.id }}">
+      <a href="{{ media | product_img_url: 'master' }}" class="captureclick" data-videohtml='{{ video_html }}'>
+        <img src="{{ video_poster_url[0] }}" alt="{{ media.alt | escape }}" />
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path d="M12 11.7l14.9 8.7L12 28.3V11.7M11 10v20l18-9.5L11 10 11 10z"/></svg>
+      </a>
+    </div>
+    {% else %}
+    <div class="image" data-media-id="{{ media.id }}">
+      <a href="{{ media | product_img_url: 'master' }}" class="captureclick">
+        {{ media | media_tag }}
+      </a>
+    </div>
+    {% endcase %}
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+<style>
+  .img-zoom-container {
+    position: relative;
+    width: 100%;
+    transition: border 200ms ease;
+    border: 1px solid transparent;
+    margin-bottom: 20px;
+  }
+  .img-zoom-container:hover {
+    border: 1px solid lightgrey;
+  }
+  #myvideo {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+    -webkit-transition: opacity 500ms ease;
+    transition: opacity 500ms ease;
+    opacity: 0;
+  }
+  #myvideo.show {
+    background-color: white;
+    opacity: 1;
+  }
+  #myvideo video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+  }
+  .img-zoom-image {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .img-zoom-lens {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+  }
+  .img-zoom-result {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    -webkit-transition: background-position 100ms ease, opacity 500ms ease;
+    transition: background-position 100ms ease, opacity 500ms ease;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+  }
+  .img-zoom-container:hover .img-zoom-result {
+    opacity: 1;
+  }
+  .img-zoom .thumbs {
+    width: 100%;
+    height: 210px;
+    border: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    letter-spacing: -0.31em;
+    font-size: 0;
+  }
+  .img-zoom .thumbs .image {
+    padding: 0px 10px 0px 0px;
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+  }
+  .img-zoom .thumbs .image a {
+    display: block;
+    height: 100%;
+    border: none;
+    margin: 0;
+    padding: 0;
+    -webkit-transition: border 500ms ease;
+    transition: border 500ms ease;
+    border: 1px solid transparent;
+  }
+  .img-zoom .thumbs .image a:hover {
+    border: 1px solid lightgrey;
+  }
+  .img-zoom .thumbs .image a img {
+    border: 0;
+    width: auto;
+    height: 100%;
+    display: block;
+  }
+</style>
+<script>
+  function initThumbnails() {
+    const img = document.getElementById("myimage");
+    const myvideo = document.getElementById("myvideo");
+    const thumbnails = document.querySelectorAll(".img-zoom .thumbs .image a");
+    if (thumbnails.length) {
+      thumbnails.forEach(myFunction);
+      function myFunction(item, index) {
+        item.addEventListener("click", function (event) {
+          event.preventDefault();
+          const target = event.target.closest("a.captureclick");
+          const data_videohtml = target.dataset.videohtml;
+          if(data_videohtml){
+            myvideo.innerHTML = data_videohtml;
+            myvideo.classList.add('show');
+          } else {
+            myvideo.innerHTML = '';
+            myvideo.classList.remove('show');
+            const href = target.href;
+            img.src = href;
+            imageZoom("myimage", "myresult");
+          }
+        });
+      }
+    }
+  }
+  function imageZoom(imgID, resultID) {
+    var img, lens, result, cx, cy;
+    img = document.getElementById(imgID);
+    result = document.getElementById(resultID);
+    /*create and insert lens:*/
+    lens = document.createElement("DIV");
+    lens.setAttribute("class", "img-zoom-lens");
+    img.parentElement.insertBefore(lens, img);
+    /*calculate the ratio between result DIV and lens:*/
+    cx = result.offsetWidth / lens.offsetWidth;
+    cy = result.offsetHeight / lens.offsetHeight;
+    /*set background properties for the result DIV:*/
+    result.style.backgroundImage = "url('" + img.src + "')";
+    result.style.backgroundSize = img.width * cx + "px " + img.height * cy + "px";
+    /*execute a function when someone moves the cursor over the image, or the lens:*/
+    lens.addEventListener("mousemove", moveLens);
+    img.addEventListener("mousemove", moveLens);
+    /*and also for touch screens:*/
+    lens.addEventListener("touchmove", moveLens);
+    img.addEventListener("touchmove", moveLens);
+    function moveLens(e) {
+      var pos, x, y;
+      /*prevent any other actions that may occur when moving over the image:*/
+      e.preventDefault();
+      /*get the cursor's x and y positions:*/
+      pos = getCursorPos(e);
+      /*calculate the position of the lens:*/
+      x = pos.x - lens.offsetWidth / 2;
+      y = pos.y - lens.offsetHeight / 2;
+      /*prevent the lens from being positioned outside the image:*/
+      if (x > img.width - lens.offsetWidth) {
+        x = img.width - lens.offsetWidth;
+      }
+      if (x < 0) {
+        x = 0;
+      }
+      if (y > img.height - lens.offsetHeight) {
+        y = img.height - lens.offsetHeight;
+      }
+      if (y < 0) {
+        y = 0;
+      }
+      /*set the position of the lens:*/
+      lens.style.left = x + "px";
+      lens.style.top = y + "px";
+      /*display what the lens "sees":*/
+      result.style.backgroundPosition = "-" + x * cx + "px -" + y * cy + "px";
+    }
+    function getCursorPos(e) {
+      var a,
+          x = 0,
+          y = 0;
+      e = e || window.event;
+      /* get the x and y positions of the image: */
+      a = img.getBoundingClientRect();
+      /* calculate the cursor's x and y coordinates, relative to the image: */
+      x = e.pageX - a.left;
+      y = e.pageY - a.top;
+      /* consider any page scrolling: */
+      x = x - window.pageXOffset;
+      y = y - window.pageYOffset;
+      return { x: x, y: y };
+    }
+  }
+  window.addEventListener('load', function(event) {
+    // Initiate zoom effect:
+    imageZoom("myimage", "myresult");
+    initThumbnails();
+  });
+</script>
+<!-- End img-zoom -->
